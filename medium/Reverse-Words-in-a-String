@@ -1,0 +1,9 @@
+class Solution(object):
+    def reverseWords(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        # split() without args collapses multiple spaces and trims ends;
+        # reverse the list and join with single spaces.
+        return " ".join(s.split()[::-1])
