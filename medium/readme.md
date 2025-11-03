@@ -1,4 +1,4 @@
-###151. Reverse Words in a String
+### 151. Reverse Words in a String
 Solved
 Medium
 
@@ -43,7 +43,7 @@ Follow-up: If the string data type is mutable in your language, can you solve it
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-###1578. Minimum Time to Make Rope Colorful
+### 1578. Minimum Time to Make Rope Colorful
 Solved
 Medium
 
