@@ -96,3 +96,91 @@ Remove balloons at indices 0 and 4 → 1 + 1 = 2
 - `colors` only lowercase English letters
 
 ---
+
+## ✅ 3607. Power Grid Maintenance  
+**Difficulty:** Medium  
+
+### 📝 Description
+You are given an integer `c` representing the number of power stations, each with a unique ID from `1` to `c` (1-based indexing).
+
+These stations are connected via `n` bidirectional cables given as a 2D array `connections`, where  
+`connections[i] = [ui, vi]` means there is a cable between stations `ui` and `vi`.
+
+Stations that are directly or indirectly connected form a **power grid**.  
+Initially, all stations are **online** (operational).
+
+You are also given an array `queries`, where each query has one of two forms:
+
+- `[1, x]`: a maintenance check request for station `x`  
+  - If station `x` is **online**, it handles the check itself.  
+  - If station `x` is **offline**, the check is handled by the **online station with the smallest ID** in the same grid.  
+  - If no online stations exist in that grid, return `-1`.
+
+- `[2, x]`: station `x` goes **offline** (non-operational).  
+
+The **structure of the grid does not change** when stations go offline —  
+offline nodes remain part of their original grid.
+
+Return an array of integers representing results for all `[1, x]` queries in order.
+
+---
+
+### 📥 Input
+- `c`: integer (number of stations)  
+- `connections`: 2D list of bidirectional links between stations  
+- `queries`: list of operations `[1, x]` or `[2, x]`
+
+### 📤 Output
+- Integer array — results of all maintenance queries `[1, x]`
+
+---
+
+### 🔍 Examples  
+
+#### Example 1
+Input:
+c = 5
+connections = [[1,2],[2,3],[3,4],[4,5]]
+queries = [[1,3],[2,1],[1,1],[2,2],[1,2]]
+
+Output: [3,2,3]
+
+**Explanation:**
+
+- Initially, all stations `{1,2,3,4,5}` are online in one grid.  
+- `[1,3]`: station 3 is online → resolves itself → output `3`  
+- `[2,1]`: station 1 goes offline → remaining `{2,3,4,5}`  
+- `[1,1]`: station 1 is offline → handled by smallest online ID `2`  
+- `[2,2]`: station 2 goes offline → remaining `{3,4,5}`  
+- `[1,2]`: station 2 offline → handled by smallest online ID `3`  
+
+---
+
+#### Example 2
+Input:
+c = 3
+connections = []
+queries = [[1,1],[2,1],[1,1]]
+
+Output: [1,-1]
+
+**Explanation:**
+
+- No connections → each station is its own grid.  
+- `[1,1]`: station 1 online → result `1`  
+- `[2,1]`: station 1 goes offline  
+- `[1,1]`: station 1 offline → no stations in grid → `-1`  
+
+---
+
+### ✅ Constraints
+- `1 <= c <= 10^5`  
+- `0 <= n == connections.length <= min(10^5, c * (c - 1) / 2)`  
+- `connections[i].length == 2`  
+- `1 <= ui, vi <= c`, `ui != vi`  
+- `1 <= queries.length <= 2 * 10^5`  
+- `queries[i].length == 2`  
+- `queries[i][0] ∈ {1, 2}`  
+- `1 <= queries[i][1] <= c`
+
+---
