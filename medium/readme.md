@@ -184,3 +184,62 @@ Output: [1,-1]
 - `1 <= queries[i][1] <= c`
 
 ---
+
+## ✅ 474. Ones and Zeroes  
+**Difficulty:** Medium  
+
+### 📝 Description
+You are given an array of binary strings `strs` and two integers `m` and `n`.
+
+Find the size of the **largest subset** of `strs` such that the subset contains **at most** `m` zeros and **at most** `n` ones in total.  
+(A subset means you choose some strings from `strs`; every chosen string contributes its zeros and ones to the totals.)
+
+Return the **maximum number of strings** you can pick.
+
+---
+
+### 📥 Input
+- `strs`: array of binary strings (consisting only of `'0'` and `'1'`)
+- `m`: maximum number of zeros allowed
+- `n`: maximum number of ones allowed
+
+### 📤 Output
+- An integer — the **maximum size** of a valid subset.
+
+---
+
+### 🔍 Examples
+
+#### Example 1
+**Input:**  
+`strs = ["10","0001","111001","1","0"], m = 5, n = 3`  
+**Output:** `4`  
+
+**Explanation:**  
+A largest valid subset is `{"10","0001","1","0"}` which uses 5 zeros and 3 ones.
+
+---
+
+#### Example 2
+**Input:**  
+`strs = ["10","0","1"], m = 1, n = 1`  
+**Output:** `2`  
+
+**Explanation:**  
+A largest valid subset is `{"0","1"}`.
+
+---
+
+### ✅ Constraints
+- `1 <= strs.length <= 600`  
+- `1 <= strs[i].length <= 100`  
+- Each `strs[i]` contains only `'0'` and `'1'`  
+- `1 <= m, n <= 100`
+
+---
+
+### 💡 Note
+This is a **0/1 knapsack** variant with **two capacities** (zeros and ones).  
+A common solution uses 2D DP: `dp[i][j]` = max strings using at most `i` zeros and `j` ones.
+
+---
