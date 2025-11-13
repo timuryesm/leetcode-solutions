@@ -243,3 +243,52 @@ This is a **0/1 knapsack** variant with **two capacities** (zeros and ones).
 A common solution uses 2D DP: `dp[i][j]` = max strings using at most `i` zeros and `j` ones.
 
 ---
+
+## ✅ 3228. Maximum Number of Operations to Move Ones to the End  
+**Difficulty:** Medium
+
+### 📝 Description
+You are given a **binary string** `s`. You may repeat the following operation any number of times:
+
+- Choose an index `i` with `i + 1 < s.length` such that `s[i] == '1'` and `s[i + 1] == '0'`.
+- **Move** the character `s[i]` (that `'1'`) to the **right** until it reaches the **end of the string** or the position **just before the next `'1'`**.  
+  - Example: for `s = "010010"`, choosing `i = 1` yields `"000110"`.
+
+Return the **maximum number of operations** you can perform.
+
+---
+
+### 📥 Input
+- `s`: a binary string (characters are `'0'` or `'1'`)
+
+### 📤 Output
+- An integer — the maximum number of operations possible
+
+---
+
+### 🔍 Examples
+
+#### Example 1
+Input:  
+`s = "1001101"`  
+Output:  
+`4`  
+Explanation (one optimal sequence):
+1. `1001101` → choose `i=0` → `0011101`  
+2. `0011101` → choose `i=4` → `0011011`  
+3. `0011011` → choose `i=3` → `0010111`  
+4. `0010111` → choose `i=2` → `0001111`
+
+#### Example 2
+Input:  
+`s = "00111"`  
+Output:  
+`0`
+
+---
+
+### ✅ Constraints
+- `1 <= s.length <= 10^5`  
+- `s[i] ∈ {'0', '1'}`
+
+---
