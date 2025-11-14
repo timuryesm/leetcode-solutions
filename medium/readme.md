@@ -292,3 +292,62 @@ Output:
 - `s[i] ∈ {'0', '1'}`
 
 ---
+
+## ✅ 2536. Increment Submatrices by One  
+**Difficulty:** Medium  
+
+### 📝 Description
+You are given an integer `n`, representing an initial `n x n` matrix `mat` filled with zeros, and a list of queries `queries`, where each query is `[r1, c1, r2, c2]`.  
+For each query, add `1` to every cell inside the submatrix with **top-left** `(r1, c1)` and **bottom-right** `(r2, c2)` (inclusive).  
+Return the final matrix after applying all queries.
+
+---
+
+### 💡 Key Idea (2D Difference Array)
+A naive per-cell increment per query is too slow (`O(q * n^2)` in the worst case).  
+Instead, use a **2D difference array** with prefix sums:
+
+For each query `[r1, c1, r2, c2]`, apply:
+- `diff[r1][c1] += 1`
+- `diff[r1][c2 + 1] -= 1`
+- `diff[r2 + 1][c1] -= 1`
+- `diff[r2 + 1][c2 + 1] += 1`
+
+Then:
+1. Take prefix sums row-wise.
+2. Take prefix sums column-wise.
+3. Trim back to `n x n` to get the result.
+
+This turns each query into **O(1)** work and reconstruction into **O(n²)**.
+
+---
+
+### ✅ Algorithm
+1. Initialize a `(n+1) x (n+1)` `diff` matrix with zeros.
+2. For each query, mark its corners in `diff` as above.
+3. Compute horizontal prefix sums (rows), then vertical prefix sums (columns).
+4. Extract the top-left `n x n` as the answer.
+
+---
+
+### ⏱️ Complexity
+- **Time:** `O(n² + q)` — each query is O(1), plus two passes over the grid.
+- **Space:** `O(n²)` for the difference matrix.
+
+---
+
+### 🧩 Edge Cases
+- Single query covering the whole matrix.
+- Queries that are single cells (`r1 == r2` and `c1 == c2`).
+- `n = 1`.
+- Many small overlapping queries.
+
+---
+
+### 🧪 Example
+**Input:**  
+`n = 3`, `queries = [[1,1,2,2],[0,0,1,1]]`  
+**Output:**  
+`[[1,1,0],[1,2,1],[0,1,1]]`
+
+---
