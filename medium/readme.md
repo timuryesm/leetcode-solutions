@@ -351,3 +351,55 @@ This turns each query into **O(1)** work and reconstruction into **O(n²)**.
 `[[1,1,0],[1,2,1],[0,1,1]]`
 
 ---
+
+## ✅ 3234. Count the Number of Substrings With Dominant Ones
+**Difficulty:** Medium
+
+### 📝 Description
+You are given a binary string `s`. A substring has **dominant ones** if:
+```
+#ones >= (#zeros)^2
+```
+Return the **number of substrings** of `s` that satisfy this property.
+
+---
+
+### 💡 Approach (High Level)
+1. **All-ones substrings** (no zeros) are always valid. Count them in O(n) by summing lengths of 1-runs.
+2. For substrings with **z ≥ 1 zeros**, the minimal length must be at least `z*(z+1)` (since `ones >= z^2` ⇒ `length >= z^2 + z`).  
+   - Precompute positions of all zeros and slide a window of `z` zeros across them.
+   - For each window, compute how many ways you can **extend left/right** while keeping the condition:
+     - Let `left_choices` be the free characters before the first zero in the window.
+     - Let `right_choices` be the free characters after the last zero in the window.
+     - Let `core_len` be the length from first to last zero (inclusive).
+     - You need `a + b >= Lmin - core_len` with `a ∈ [0, left_choices-1]`, `b ∈ [0, right_choices-1]`.
+     - Count such pairs in **O(1)** with a small combinatorial helper.
+3. Only consider `z` up to `Zmax = floor((sqrt(1+4n)-1)/2)`, because larger `z` cannot meet the length bound inside a length-`n` string.
+4. Total time is about **O(n · Zmax)** ≈ **O(n√n)**, space **O(n)**.
+
+> 🔧 **Python 2 note:** If your judge runs Python 2, replace `math.isqrt` with `math.sqrt` and guard the floor computation.
+
+---
+
+### ⏱️ Complexity
+- **Time:** `O(n√n)` (since `Zmax = Θ(√n)`)
+- **Space:** `O(n)`
+
+---
+
+### 🧪 Examples
+**Example 1**
+```
+Input:  s = "00011"
+Output: 5
+Explanation substrings with dominant ones:
+"1" (x2), "01", "11", "011"
+```
+
+**Example 2**
+```
+Input:  s = "101101"
+Output: 16
+```
+
+---
