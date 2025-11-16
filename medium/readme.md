@@ -403,3 +403,56 @@ Output: 16
 ```
 
 ---
+
+## 1513. Number of Substrings With Only 1s
+**Difficulty:** Medium
+
+### 📝 Problem
+Given a binary string `s`, return the number of substrings that contain **only** `'1'` characters.  
+Because the count can be large, return the result modulo **1e9+7**.
+
+### 💡 Intuition
+A contiguous run of `'1'`s of length `L` contributes:
+```
+1 + 2 + ... + L = L * (L + 1) / 2
+```
+substrings consisting only of `'1'`.  
+So we just scan the string, accumulate the length of the current run of `'1'`s, and add the triangular number each time a `'0'` breaks the run (and once at the end).
+
+### ✅ Algorithm
+1. Initialize `ans = 0`, `run = 0`.
+2. For each character:
+   - If it's `'1'`, increment `run`.
+   - If it's `'0'`, add `run * (run + 1) // 2` to `ans` and reset `run` to 0.
+3. After the loop, add the contribution of the final run.
+4. Return `ans % MOD`.
+
+### ⏱️ Complexity
+- **Time:** `O(n)` — single pass.
+- **Space:** `O(1)` — constant extra space.
+
+### 🧪 Examples
+- `s = "0110111"` → runs: [2, 3] → `2*3/2 + 3*4/2 = 3 + 6 = 9`
+- `s = "101"` → runs: [1, 1] → `1 + 1 = 2`
+
+### 🧩 Reference Implementation (Python)
+```python
+class Solution(object):
+    def numSub(self, s):
+        MOD = 10**9 + 7
+        ans = 0
+        run = 0
+
+        for ch in s:
+            if ch == '1':
+                run += 1
+            else:
+                if run:
+                    ans = (ans + run * (run + 1) // 2) % MOD
+                    run = 0
+
+        if run:
+            ans = (ans + run * (run + 1) // 2) % MOD
+
+        return ans
+```
