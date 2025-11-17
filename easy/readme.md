@@ -74,3 +74,78 @@ Output: [11,15,15,15,12]
 - `1 <= x <= k <= nums.length`
 
 ---
+
+## ✅ 1437. Check If All 1's Are at Least Length K Places Away  
+**Difficulty:** Easy
+
+### 📝 Description
+Given a **binary** array `nums` and an integer `k`, return `true` if **every pair of 1s** in `nums` are at least `k` positions apart; otherwise return `false`.
+
+- “At least `k` apart” means the **gap** between indices of consecutive 1s is **≥ k** zeros in between (i.e., index difference **> k**).
+
+---
+
+### 📥 Input
+- `nums`: list of integers, each `0` or `1`
+- `k`: non-negative integer
+
+### 📤 Output
+- `bool`: `True` if all 1s are spaced by at least `k`, else `False`
+
+---
+
+### 🔍 Examples
+
+#### Example 1
+**Input:**  
+`nums = [1,0,0,0,1,0,0,1]`, `k = 2`  
+**Output:** `true`  
+**Explanation:** Gaps between 1s are 3 and 3 (> 2).
+
+#### Example 2
+**Input:**  
+`nums = [1,0,0,1,0,1]`, `k = 2`  
+**Output:** `false`  
+**Explanation:** The last two 1s are only 2 apart in indices → 1 zero between them (< 2).
+
+---
+
+### 💡 Approach
+Track the **index of the last seen `1`**. For each new `1` at index `i`, check the distance:
+- If `i - last_index <= k`, return `False`.
+- Otherwise update `last_index = i` and continue.
+
+Initialize `last_index = -k - 1` so the very first `1` always passes.
+
+---
+
+### ⏱️ Complexity
+- **Time:** O(n)  
+- **Space:** O(1)
+
+---
+
+### ✨ Python Reference Solution
+```python
+class Solution(object):
+    def kLengthApart(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        last = -k - 1  # ensures the first 1 always passes the distance check
+        for i, v in enumerate(nums):
+            if v == 1:
+                if i - last <= k:
+                    return False
+                last = i
+        return True
+```
+
+---
+
+### 🧪 Edge Cases
+- `k = 0` → always `True` (no spacing required).
+- No `1`s → `True`.
+- All `1`s with insufficient gaps → `False`.
