@@ -149,3 +149,76 @@ class Solution(object):
 - `k = 0` → always `True` (no spacing required).
 - No `1`s → `True`.
 - All `1`s with insufficient gaps → `False`.
+
+---
+
+# 717. 1-bit and 2-bit Characters
+
+## 🧩 Problem Summary
+You are given a binary array `bits` representing characters encoded in one-bit and two-bit formats:
+
+- **One-bit character:** represented by `0`
+- **Two-bit character:** represented by `10` or `11`
+
+The array always ends with `0`, and you must determine whether the last character is necessarily a one-bit character.
+
+---
+
+## 📘 Examples
+
+**Example 1**
+```
+Input:  [1,0,0]
+Output: true
+Explanation: The only valid decoding is [10], [0].
+```
+
+**Example 2**
+```
+Input:  [1,1,1,0]
+Output: false
+Explanation: The valid decoding is [11], [10].
+```
+
+---
+
+## ✅ Approach
+
+We decode the array from left to right:
+
+- If we see a `1`, it must start a **two-bit character**, so we skip 2 positions.
+- If we see a `0`, it is a **one-bit character**, so we skip 1 position.
+- We repeat until we reach (or pass) the last index.
+
+If our pointer lands **exactly on the final index**, the last character is a one-bit character.
+
+---
+
+## 🧠 Time & Space Complexity
+
+- **Time Complexity:** `O(n)` — single linear scan  
+- **Space Complexity:** `O(1)` — constant extra space
+
+---
+
+## 🧪 Code Implementation
+
+```python
+class Solution(object):
+    def isOneBitCharacter(self, bits):
+        i = 0
+        n = len(bits)
+
+        while i < n - 1:
+            if bits[i] == 1:
+                i += 2
+            else:
+                i += 1
+
+        return i == n - 1
+```
+
+---
+
+## ✔️ Result
+Return `True` if the final character must be a one-bit character, otherwise `False`.
