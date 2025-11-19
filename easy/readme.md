@@ -222,3 +222,78 @@ class Solution(object):
 
 ## ✔️ Result
 Return `True` if the final character must be a one-bit character, otherwise `False`.
+
+---
+
+# 2154. Keep Multiplying Found Values by Two
+
+## 🧩 Problem Summary
+You are given an integer array `nums` and an integer `original`.  
+Your task is to repeatedly check whether `original` exists in `nums`.
+
+### Process:
+1. If `original` is found in `nums`, multiply it by 2.  
+2. If not found, stop the process.  
+3. Return the final value of `original`.
+
+---
+
+## 📘 Examples
+
+**Example 1**
+```
+Input: nums = [5,3,6,1,12], original = 3
+Output: 24
+
+Explanation:
+3 → found → becomes 6  
+6 → found → becomes 12  
+12 → found → becomes 24  
+24 → not found → return 24
+```
+
+**Example 2**
+```
+Input: nums = [2,7,9], original = 4
+Output: 4
+
+Explanation:
+4 not found → return 4
+```
+
+---
+
+## ✅ Approach
+
+- Convert `nums` to a **set** for `O(1)` lookup time.
+- While `original` is found in the set → multiply it by 2.
+- Stop when it is no longer present.
+
+---
+
+## 🧠 Time & Space Complexity
+
+- **Time Complexity:** `O(n)`  
+- **Space Complexity:** `O(n)` — for the set
+
+---
+
+## 🧪 Code Implementation
+
+```python
+class Solution(object):
+    def findFinalValue(self, nums, original):
+        nums_set = set(nums)
+
+        while original in nums_set:
+            original *= 2
+
+        return original
+```
+
+---
+
+## ✔️ Result
+This function returns the final doubled value of `original` after repeating the search process.
+
+---
