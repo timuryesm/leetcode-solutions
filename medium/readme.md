@@ -456,3 +456,111 @@ class Solution(object):
 
         return ans
 ```
+# 1930. Unique Length-3 Palindromic Subsequences
+
+## 🧩 Problem Summary
+You are given a string `s` containing only lowercase English letters.  
+Your task is to count how many **unique** palindromic subsequences of **length 3** appear in `s`.
+
+A length‑3 palindrome must look like:
+
+```
+c x c
+```
+
+- The first and last characters must be **the same**.
+- The middle character can be **any character**.
+- A subsequence does **not** need to be contiguous.
+- Identical palindromes formed in different ways count **only once**.
+
+---
+
+## 📘 Examples
+
+### Example 1
+```
+Input: s = "aabca"
+Output: 3
+
+Unique palindromes:
+- "aba"
+- "aaa"
+- "aca"
+```
+
+### Example 2
+```
+Input: s = "adc"
+Output: 0
+```
+
+### Example 3
+```
+Input: s = "bbcbaba"
+Output: 4
+
+Unique palindromes:
+- "bbb"
+- "bcb"
+- "bab"
+- "aba"
+```
+
+---
+
+## ✅ Approach
+
+For each letter `'a'` to `'z'`:
+
+1. Find its **first position** and **last position** in the string.
+2. If the letter appears **at least twice**, then:
+   - Any **distinct** character between those two positions can form  
+     a palindrome `c x c`.
+3. Count these distinct middle characters.
+4. Sum results over all 26 letters.
+
+This avoids searching all subsequences and works in **linear time**.
+
+---
+
+## 🧠 Complexity
+
+- **Time Complexity:** `O(n)`  
+- **Space Complexity:** `O(1)` (only 26 characters tracked)
+
+---
+
+## 🧪 Code Implementation
+
+```python
+class Solution(object):
+    def countPalindromicSubsequence(self, s):
+        n = len(s)
+
+        first = [n] * 26
+        last = [-1] * 26
+
+        for i, ch in enumerate(s):
+            idx = ord(ch) - ord('a')
+            first[idx] = min(first[idx], i)
+            last[idx] = max(last[idx], i)
+
+        ans = 0
+
+        for c in range(26):
+            if first[c] < last[c]:
+                l, r = first[c], last[c]
+                mid_chars = set(s[l+1:r])
+                ans += len(mid_chars)
+
+        return ans
+```
+
+---
+
+## ✔️ Result
+
+This solution efficiently counts all *unique* palindromic subsequences of length 3  
+by identifying valid outer characters and scanning distinct middle characters.
+
+---
