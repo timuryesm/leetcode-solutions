@@ -297,3 +297,95 @@ class Solution(object):
 This function returns the final doubled value of `original` after repeating the search process.
 
 ---
+
+# 1018. Binary Prefix Divisible By 5
+
+## 🧩 Problem Summary
+You are given a binary array `nums`, where each element is either `0` or `1`.
+
+For each index `i`, define `xᵢ` as the **decimal value** of the binary number represented by `nums[0..i]`.  
+You must return an array of booleans where:
+
+```
+answer[i] = True  if xᵢ is divisible by 5
+answer[i] = False otherwise
+```
+
+---
+
+## 📘 Examples
+
+### Example 1
+```
+Input: nums = [0,1,1]
+Binary prefixes:
+- 0      → 0   → divisible → true
+- 01     → 1   → false
+- 011    → 3   → false
+
+Output: [true, false, false]
+```
+
+### Example 2
+```
+Input: nums = [1,1,1]
+Binary prefixes:
+- 1   → 1   → false
+- 11  → 3   → false
+- 111 → 7   → false
+
+Output: [false, false, false]
+```
+
+---
+
+## ✅ Approach
+
+Instead of constructing full binary numbers, which would grow too large, we track the **prefix modulo 5**.
+
+Given:
+```
+current_value = x
+next bit = b
+```
+
+The updated prefix value is:
+```
+x_new = (x * 2 + b) % 5
+```
+
+If `x_new == 0`, the prefix is divisible by 5.
+
+This allows us to process all prefixes efficiently in **O(n)** time.
+
+---
+
+## 🧪 Code Implementation
+
+```python
+class Solution(object):
+    def prefixesDivBy5(self, nums):
+        res = []
+        cur = 0  # current prefix modulo 5
+
+        for b in nums:
+            cur = (cur * 2 + b) % 5
+            res.append(cur == 0)
+
+        return res
+```
+
+---
+
+## 🧠 Complexity
+
+- **Time Complexity:** `O(n)`
+- **Space Complexity:** `O(n)` for the result list
+
+---
+
+## ✔️ Final Result
+
+This algorithm efficiently determines which binary prefixes represent numbers divisible by 5 using only modulo arithmetic, ensuring optimal performance even for the largest inputs.
+
+---
