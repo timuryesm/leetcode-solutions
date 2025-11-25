@@ -564,3 +564,97 @@ This solution efficiently counts all *unique* palindromic subsequences of length
 by identifying valid outer characters and scanning distinct middle characters.
 
 ---
+
+# 1015. Smallest Integer Divisible by K
+
+## 🧩 Problem Summary
+Given a positive integer `k`, find the **length** of the smallest positive integer made only of digit `'1'` that is divisible by `k`.
+
+Such numbers are called **repunits**, e.g.:
+```
+1, 11, 111, 1111, ...
+```
+
+If no such repunit exists, return **-1**.
+
+---
+
+## 📘 Examples
+
+### Example 1
+```
+Input: k = 1
+Output: 1
+```
+
+### Example 2
+```
+Input: k = 2
+Output: -1
+```
+
+### Example 3
+```
+Input: k = 3
+Output: 3
+```
+
+---
+
+## ❗ Key Observations
+
+### ➤ Repunits cannot be divisible by 2 or 5  
+Any number formed only of '1's is **odd** and never ends with 0 or 5.  
+Thus:
+
+```
+If k % 2 == 0 or k % 5 == 0 → return -1
+```
+
+### ➤ Track remainder instead of constructing the number  
+To avoid overflow:
+
+```
+Rₙ = (Rₙ₋₁ * 10 + 1) % k
+```
+
+If `Rₙ == 0`, then the repunit of length `n` is divisible by `k`.
+
+### ➤ Check only up to k iterations  
+There are only `k` possible remainders (`0..k-1`).  
+After `k` steps, if we haven’t seen remainder 0, we are in a cycle → no solution.
+
+---
+
+## 🧪 Code Implementation
+
+```python
+class Solution(object):
+    def smallestRepunitDivByK(self, k):
+        if k % 2 == 0 or k % 5 == 0:
+            return -1
+
+        rem = 0
+        for length in range(1, k + 1):
+            rem = (rem * 10 + 1) % k
+            if rem == 0:
+                return length
+
+        return -1
+```
+
+---
+
+## 🧠 Complexity
+
+- **Time Complexity:** `O(k)`  
+- **Space Complexity:** `O(1)`  
+
+Efficient for all valid constraints (`k ≤ 100000`).
+
+---
+
+## ✔️ Summary
+This solution uses modular arithmetic and the pigeonhole principle to find the smallest repunit divisible by `k` without ever constructing large integers.
+
+---
