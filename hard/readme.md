@@ -190,3 +190,123 @@ class Solution(object):
 This algorithm computes the **minimum number of integers** needed so that every interval contains **at least two** of them.
 
 ---
+
+# 2435. Paths in Matrix Whose Sum Is Divisible by K
+
+## 🧩 Problem Summary
+You are given an `m × n` integer matrix `grid` and an integer `k`.
+
+You start at **(0,0)** and can move only **right** or **down** until reaching **(m−1, n−1)**.  
+Your task: count the number of paths whose **sum of values** is divisible by `k`.
+
+Return the result modulo **1,000,000,007**.
+
+---
+
+## 📘 Examples
+
+### Example 1
+```
+Input:
+grid = [[5,2,4],
+        [3,0,5],
+        [0,7,2]], k = 3
+
+Output: 2
+```
+
+### Example 2
+```
+Input:
+grid = [[0,0]], k = 5
+Output: 1
+```
+
+### Example 3
+```
+Input:
+grid = [[7,3,4,9],
+        [2,3,6,2],
+        [2,3,7,0]], k = 1
+
+Output: 10
+```
+
+---
+
+## ✅ Approach: Dynamic Programming with Remainders
+
+We define a DP where:
+
+```
+dp[i][j][r] = #paths to cell (i,j) such that the path sum % k == r
+```
+
+### Transitions
+You can come from:
+- Top: `(i−1, j)`
+- Left: `(i, j−1)`
+
+Let:
+```
+val = grid[i][j] % k
+new_r = (r + val) % k
+```
+
+Then:
+```
+dp[i][j][new_r] += dp[i−1][j][r]
+dp[i][j][new_r] += dp[i][j−1][r]
+```
+
+Finally:
+```
+answer = dp[m−1][n−1][0]
+```
+
+---
+
+## 🧠 Complexity
+- **Time:** `O(m × n × k)`
+- **Space:** `O(m × n × k)`
+- Works under constraint `m × n ≤ 50,000`.
+
+---
+
+## 🧪 Code Implementation
+
+```python
+class Solution(object):
+    def numberOfPaths(self, grid, k):
+        MOD = 10**9 + 7
+        m = len(grid)
+        n = len(grid[0])
+
+        dp = [[[0] * k for _ in range(n)] for _ in range(m)]
+
+        first_val = grid[0][0] % k
+        dp[0][0][first_val] = 1
+
+        for i in range(m):
+            for j in range(n):
+                if i == 0 and j == 0:
+                    continue
+
+                val = grid[i][j] % k
+                for r in range(k):
+                    if i > 0:
+                        dp[i][j][(r + val) % k] = (dp[i][j][(r + val) % k] +
+                                                   dp[i-1][j][r]) % MOD
+                    if j > 0:
+                        dp[i][j][(r + val) % k] = (dp[i][j][(r + val) % k] +
+                                                   dp[i][j-1][r]) % MOD
+
+        return dp[m-1][n-1][0]
+```
+
+---
+
+## ✔️ Summary
+This solution uses a modulo-state DP that efficiently counts paths with sum divisible by `k`, avoiding overflow and satisfying hard constraints.
+
+---
