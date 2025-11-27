@@ -658,3 +658,122 @@ Efficient for all valid constraints (`k ≤ 100000`).
 This solution uses modular arithmetic and the pigeonhole principle to find the smallest repunit divisible by `k` without ever constructing large integers.
 
 ---
+
+# 3381. Maximum Subarray Sum With Length Divisible by K
+
+## 🧩 Problem Summary
+You are given an integer array `nums` and an integer `k`.
+
+Your goal is to compute the **maximum possible sum of any subarray whose length is divisible by `k`**.
+
+A subarray is a contiguous segment of the array.
+
+---
+
+## 📘 Examples
+
+### Example 1
+```
+Input: nums = [1, 2], k = 1
+Output: 3
+
+Explanation:
+The subarray [1, 2] has length 2 (divisible by 1) and sum = 3.
+```
+
+### Example 2
+```
+Input: nums = [-1, -2, -3, -4, -5], k = 4
+Output: -10
+
+Explanation:
+The subarray [-1, -2, -3, -4] has length 4 and is the best possible.
+```
+
+### Example 3
+```
+Input: nums = [-5, 1, 2, -3, 4], k = 2
+Output: 4
+
+Explanation:
+The best valid subarray is [1, 2, -3, 4] with length 4.
+```
+
+---
+
+## ✅ Key Insight
+
+Let:
+```
+pref[i] = sum of nums[0..i-1]
+```
+
+Then:
+```
+sum(nums[l..r]) = pref[r+1] - pref[l]
+length = r - l + 1
+```
+
+We need:
+```
+(r - l + 1) % k == 0
+⇔ (r + 1) % k == l % k
+```
+
+Thus, valid subarrays correspond to **pairs of prefix indices with the same modulo k**.
+
+For each remainder class, we keep the **minimum prefix sum** seen so far.
+
+For prefix index `i` with sum `pref[i]`:
+```
+candidate_sum = pref[i] - minPref[i % k]
+```
+
+We track the maximum such value.
+
+---
+
+## 🧠 Complexity
+
+- **Time Complexity:** O(n)
+- **Space Complexity:** O(k)
+
+Efficient for n up to 2 × 10⁵.
+
+---
+
+## 🧪 Code Implementation
+
+```python
+class Solution(object):
+    def maxSubarraySum(self, nums, k):
+        n = len(nums)
+
+        INF = float('inf')
+        minPref = [INF] * k
+
+        prefix = 0
+        minPref[0] = 0
+
+        ans = -10**30
+
+        for i, x in enumerate(nums, 1):
+            prefix += x
+            r = i % k
+
+            if minPref[r] != INF:
+                ans = max(ans, prefix - minPref[r])
+
+            if prefix < minPref[r]:
+                minPref[r] = prefix
+
+        return ans
+```
+
+---
+
+## ✔️ Summary
+This prefix-sum + modulo technique efficiently finds the best subarray whose size is divisible by `k`.  
+It handles negative numbers and works in linear time, making it perfect for large inputs.
+
+---
