@@ -310,3 +310,111 @@ class Solution(object):
 This solution uses a modulo-state DP that efficiently counts paths with sum divisible by `k`, avoiding overflow and satisfying hard constraints.
 
 ---
+
+# 2872. Maximum Number of K-Divisible Components
+
+## 🧩 Problem Summary
+You are given an undirected tree with `n` nodes labeled from `0` to `n−1`.
+
+- `edges[i] = [a, b]` indicates an undirected edge between nodes `a` and `b`.
+- Each node `i` has a value `values[i]`.
+- You are also given an integer `k`.
+
+You may **remove any set of edges** such that every resulting connected component has a **total value divisible by `k`**.
+
+Your goal is to return the **maximum number of such components**.
+
+---
+
+## 📘 Examples
+
+### Example 1
+```
+Input:
+n = 5
+edges = [[0,2],[1,2],[1,3],[2,4]]
+values = [1,8,1,4,4]
+k = 6
+
+Output: 2
+```
+
+### Example 2
+```
+Input:
+n = 7
+edges = [[0,1],[0,2],[1,3],[1,4],[2,5],[2,6]]
+values = [3,0,6,1,5,2,1]
+k = 3
+
+Output: 3
+```
+
+---
+
+## ✅ Key Insight
+
+This is a **tree DP** problem using **DFS + modulo accumulation**.
+
+For each node:
+1. Compute the subtree sum modulo `k`.
+2. For each child:
+   - If child remainder = `0`, that subtree already forms a valid component → we increase the count and **do not propagate** its sum upward.
+   - Otherwise, we accumulate its remainder upward.
+
+Because the full tree sum is guaranteed divisible by `k`, the root subtree is always valid.
+
+---
+
+## 🧠 Complexity
+
+- **Time:** `O(n)`
+- **Space:** `O(n)`
+
+Efficient for `n ≤ 30,000`.
+
+---
+
+## 🧪 Code Implementation
+
+```python
+import sys
+sys.setrecursionlimit(10**7)
+
+class Solution(object):
+    def maxKDivisibleComponents(self, n, edges, values, k):
+        g = [[] for _ in range(n)]
+        for u, v in edges:
+            g[u].append(v)
+            g[v].append(u)
+
+        self.ans = 0
+
+        def dfs(u, parent):
+            sub = values[u] % k
+            for v in g[u]:
+                if v == parent:
+                    continue
+                r = dfs(v, u)
+                sub = (sub + r) % k
+            if sub == 0:
+                self.ans += 1
+                return 0
+            return sub
+
+        dfs(0, -1)
+        return self.ans
+```
+
+---
+
+## ✔️ Summary
+We process the tree bottom-up:
+
+- Child subtree divisible by `k` → becomes its own component.
+- Other subtree remainders bubble to the parent.
+- Final count is the number of divisible subtrees.
+
+This produces the maximum possible number of `k`-divisible components.
+
+---
