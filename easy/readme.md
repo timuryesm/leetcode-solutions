@@ -389,3 +389,112 @@ class Solution(object):
 This algorithm efficiently determines which binary prefixes represent numbers divisible by 5 using only modulo arithmetic, ensuring optimal performance even for the largest inputs.
 
 ---
+
+# 3512. Minimum Operations to Make Array Sum Divisible by K
+
+## 🧩 Problem Summary
+You are given:
+- An integer array `nums`
+- An integer `k`
+- An allowed operation:  
+  **Choose any index `i` and replace `nums[i]` with `nums[i] - 1`**
+
+Each operation reduces the **total sum** of the array by exactly **1**.
+
+Your task is to determine the **minimum number of operations** needed to make:
+
+```
+sum(nums) % k == 0
+```
+
+---
+
+## 📘 Examples
+
+### Example 1
+```
+Input: nums = [3, 9, 7], k = 5
+Output: 4
+
+Explanation:
+Sum = 19 → 19 % 5 = 4
+We need 4 operations to reach a sum divisible by 5.
+```
+
+### Example 2
+```
+Input: nums = [4, 1, 3], k = 4
+Output: 0
+
+Explanation:
+Sum = 8, already divisible by 4.
+```
+
+### Example 3
+```
+Input: nums = [3, 2], k = 6
+Output: 5
+
+Explanation:
+Sum = 5 → 5 % 6 = 5
+We need 5 operations to reach 0 (divisible by 6).
+```
+
+---
+
+## ✅ Key Insight
+
+Every operation decreases the total sum by **1**.
+
+Let:
+```
+S = sum(nums)
+```
+
+We want the smallest `t ≥ 0` such that:
+```
+(S - t) % k == 0
+```
+
+This rearranges to:
+```
+t % k == S % k
+```
+
+Thus the **minimum number of operations** is:
+```
+t = S % k
+```
+
+(When `S % k == 0`, the answer is `0`.)
+
+---
+
+## 🧪 Code Implementation
+
+```python
+class Solution(object):
+    def minOperations(self, nums, k):
+        total = sum(nums)
+        return total % k
+```
+
+---
+
+## 🧠 Complexity
+
+- **Time:** O(n)
+- **Space:** O(1)
+
+---
+
+## ✔️ Summary
+Because each operation decreases the total sum by exactly 1, the minimal number of operations needed to make the sum divisible by `k` is simply:
+
+```
+sum(nums) % k
+```
+
+This provides a simple and optimal 1-line solution.
+
+---
