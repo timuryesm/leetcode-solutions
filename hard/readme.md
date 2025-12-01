@@ -418,3 +418,82 @@ We process the tree bottom-up:
 This produces the maximum possible number of `k`-divisible components.
 
 ---
+
+# 2141. Maximum Running Time of N Computers
+
+## 🧩 Problem Summary
+You are given:
+- `n` computers that must run **simultaneously**
+- A list `batteries` where each element represents how many minutes that battery can power a computer
+
+You may:
+- Insert **one battery per computer**
+- Swap batteries between computers at any integer moment (swapping takes **zero time**)
+- Not recharge batteries
+
+Your task:
+> Compute the **maximum number of minutes** all `n` computers can run at the same time.
+
+---
+
+## 📘 Example 1
+```
+n = 2
+batteries = [3, 3, 3]
+Output: 4
+```
+By swapping drained batteries with fresh ones, both computers run for 4 minutes.
+
+---
+
+## 📘 Example 2
+```
+n = 2
+batteries = [1, 1, 1, 1]
+Output: 2
+```
+Each computer cycles through two batteries → 2 minutes total.
+
+---
+
+## ✅ Key Insight
+
+Since we can swap batteries *freely*, we only care about **total usable battery time**, not which battery goes to which computer.
+
+To check whether we can run all computers for `T` minutes:
+
+- Each battery contributes at most `min(battery, T)`
+- Total needed: `n * T`
+
+Condition:
+```
+sum(min(b, T) for b in batteries)  >=  n * T
+```
+
+We binary-search for the maximum `T` satisfying this.
+
+### Search Range
+```
+0 ≤ T ≤ sum(batteries) // n
+```
+
+---
+
+## 🧠 Complexity Analysis
+
+- **Time:** `O(m log(sum(batteries)))`
+- **Space:** `O(1)`
+
+Efficient for up to `10^5` batteries.
+
+---
+
+## ✔️ Summary
+
+This problem is solved via **binary search on running time**, using the condition:
+
+```
+sum(min(b, T)) ≥ n * T
+```
+
+Swapping batteries freely turns the problem into testing whether total available energy can sustain all computers for a given time.
