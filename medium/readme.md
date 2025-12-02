@@ -777,3 +777,93 @@ This prefix-sum + modulo technique efficiently finds the best subarray whose siz
 It handles negative numbers and works in linear time, making it perfect for large inputs.
 
 ---
+
+# 3623. Count Number of Trapezoids I
+
+## 🧩 Problem Summary
+You are given an array of points on a 2D plane.  
+Your task is to count how many **horizontal trapezoids** can be formed by choosing **four distinct points**.
+
+A **horizontal trapezoid** is a convex quadrilateral with at least one pair of **horizontal** (parallel to x-axis) sides.
+
+Return the result modulo **1,000,000,007**.
+
+---
+
+## 🧠 Key Insight
+
+To form a horizontal trapezoid, we must pick:
+
+- **Two points from y = y₁**
+- **Two points from y = y₂**, where `y₁ ≠ y₂`
+
+These pairs form two horizontal segments → which guarantees a trapezoid.
+
+Thus the problem reduces to:
+
+### ✔️ Step 1 — Group points by y‑coordinate  
+If a y-level has `cnt` points, then the number of horizontal segments is:
+
+```
+C(cnt, 2) = cnt * (cnt - 1) / 2
+```
+
+Call this value `a_i`.
+
+### ✔️ Step 2 — Every trapezoid = picking one segment from level i and one from level j  
+Total trapezoids:
+
+\[
+\sum_{i < j} a_i \cdot a_j
+\]
+
+We compute this efficiently using:
+
+\[
+rac{(\sum a_i)^2 - \sum a_i^2}{2}
+\]
+
+---
+
+## 📘 Example
+
+### Example 1
+```
+Input:
+points = [[1,0],[2,0],[3,0],[2,2],[3,2]]
+
+Output: 3
+```
+
+Horizontal segments:
+- y=0 → C(3,2)=3
+- y=2 → C(2,2)=1
+
+Total = 3×1 = 3 trapezoids.
+
+---
+
+## 📈 Complexity
+
+- **Time:** O(n)  
+- **Space:** O(n) for grouping y-coordinates  
+
+Efficient for up to **100,000** points.
+
+---
+
+## ✔️ Summary
+
+This problem becomes a clean combinatorics task:
+
+1. Count all horizontal segments on each y-level: `a_i = C(cnt_i, 2)`
+2. Any pair of horizontal segments from distinct y-levels forms a trapezoid.
+3. Count combinations with:
+
+\[
+rac{(\sum a_i)^2 - \sum a_i^2}{2}
+\]
+
+This gives an optimal and elegant O(n) solution.
+
+---
