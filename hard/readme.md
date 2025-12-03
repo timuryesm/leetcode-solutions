@@ -497,3 +497,40 @@ sum(min(b, T)) ≥ n * T
 ```
 
 Swapping batteries freely turns the problem into testing whether total available energy can sustain all computers for a given time.
+
+---
+
+# Count Number of Trapezoids II --- LeetCode 3625 (Hard)
+
+This problem asks to count how many **unique trapezoids** can be formed
+from a given set of points on the Cartesian plane. A *trapezoid* is
+defined as a **convex quadrilateral with at least one pair of parallel
+sides**.
+
+### 🔍 Key Idea
+
+A trapezoid requires at least one pair of **parallel segments** lying on
+**different supporting lines**. The high‑level strategy:
+
+1.  Enumerate all point pairs to generate all segments.
+2.  Compute each segment's **slope** and **line identifier** to detect
+    parallel but non‑collinear pairs.
+3.  Count valid parallel segment pairs using combinatorics.
+4.  Correct for overcounted special cases (e.g., parallelogram-like
+    symmetries) by grouping segments by midpoint.
+
+### 🧠 Algorithm Summary (Abstract)
+
+-   Group segments by slope and supporting line.
+-   Count pairs of parallel segments on distinct lines.
+-   Subtract configurations counted multiple times using midpoint
+    groups.
+
+### ⏱️ Complexity
+
+-   **Time:** O(n²)
+-   **Space:** O(n²)
+
+Efficient for up to 500 input points.
+
+---
