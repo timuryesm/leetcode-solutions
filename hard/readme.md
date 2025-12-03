@@ -161,31 +161,6 @@ This ensures the smallest possible set.
 
 ---
 
-## 🧪 Code Implementation
-
-```python
-class Solution(object):
-    def intersectionSizeTwo(self, intervals):
-        intervals.sort(key=lambda x: (x[1], -x[0]))
-
-        a = b = -1
-        ans = 0
-
-        for l, r in intervals:
-            if l > a:
-                ans += 2
-                b = r - 1
-                a = r
-            elif l > b:
-                ans += 1
-                b = a
-                a = r
-
-        return ans
-```
-
----
-
 ## ✔️ Result
 This algorithm computes the **minimum number of integers** needed so that every interval contains **at least two** of them.
 
@@ -273,39 +248,6 @@ answer = dp[m−1][n−1][0]
 
 ---
 
-## 🧪 Code Implementation
-
-```python
-class Solution(object):
-    def numberOfPaths(self, grid, k):
-        MOD = 10**9 + 7
-        m = len(grid)
-        n = len(grid[0])
-
-        dp = [[[0] * k for _ in range(n)] for _ in range(m)]
-
-        first_val = grid[0][0] % k
-        dp[0][0][first_val] = 1
-
-        for i in range(m):
-            for j in range(n):
-                if i == 0 and j == 0:
-                    continue
-
-                val = grid[i][j] % k
-                for r in range(k):
-                    if i > 0:
-                        dp[i][j][(r + val) % k] = (dp[i][j][(r + val) % k] +
-                                                   dp[i-1][j][r]) % MOD
-                    if j > 0:
-                        dp[i][j][(r + val) % k] = (dp[i][j][(r + val) % k] +
-                                                   dp[i][j-1][r]) % MOD
-
-        return dp[m-1][n-1][0]
-```
-
----
-
 ## ✔️ Summary
 This solution uses a modulo-state DP that efficiently counts paths with sum divisible by `k`, avoiding overflow and satisfying hard constraints.
 
@@ -372,39 +314,6 @@ Because the full tree sum is guaranteed divisible by `k`, the root subtree is al
 - **Space:** `O(n)`
 
 Efficient for `n ≤ 30,000`.
-
----
-
-## 🧪 Code Implementation
-
-```python
-import sys
-sys.setrecursionlimit(10**7)
-
-class Solution(object):
-    def maxKDivisibleComponents(self, n, edges, values, k):
-        g = [[] for _ in range(n)]
-        for u, v in edges:
-            g[u].append(v)
-            g[v].append(u)
-
-        self.ans = 0
-
-        def dfs(u, parent):
-            sub = values[u] % k
-            for v in g[u]:
-                if v == parent:
-                    continue
-                r = dfs(v, u)
-                sub = (sub + r) % k
-            if sub == 0:
-                self.ans += 1
-                return 0
-            return sub
-
-        dfs(0, -1)
-        return self.ans
-```
 
 ---
 
