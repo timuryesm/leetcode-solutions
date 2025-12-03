@@ -500,7 +500,7 @@ Swapping batteries freely turns the problem into testing whether total available
 
 ---
 
-# Count Number of Trapezoids II --- LeetCode 3625 (Hard)
+# 3625 Count Number of Trapezoids II --- LeetCode (Hard)
 
 This problem asks to count how many **unique trapezoids** can be formed
 from a given set of points on the Cartesian plane. A *trapezoid* is
