@@ -125,26 +125,6 @@ Initialize `last_index = -k - 1` so the very first `1` always passes.
 
 ---
 
-### ✨ Python Reference Solution
-```python
-class Solution(object):
-    def kLengthApart(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: bool
-        """
-        last = -k - 1  # ensures the first 1 always passes the distance check
-        for i, v in enumerate(nums):
-            if v == 1:
-                if i - last <= k:
-                    return False
-                last = i
-        return True
-```
-
----
-
 ### 🧪 Edge Cases
 - `k = 0` → always `True` (no spacing required).
 - No `1`s → `True`.
@@ -198,25 +178,6 @@ If our pointer lands **exactly on the final index**, the last character is a one
 
 - **Time Complexity:** `O(n)` — single linear scan  
 - **Space Complexity:** `O(1)` — constant extra space
-
----
-
-## 🧪 Code Implementation
-
-```python
-class Solution(object):
-    def isOneBitCharacter(self, bits):
-        i = 0
-        n = len(bits)
-
-        while i < n - 1:
-            if bits[i] == 1:
-                i += 2
-            else:
-                i += 1
-
-        return i == n - 1
-```
 
 ---
 
@@ -275,21 +236,6 @@ Explanation:
 
 - **Time Complexity:** `O(n)`  
 - **Space Complexity:** `O(n)` — for the set
-
----
-
-## 🧪 Code Implementation
-
-```python
-class Solution(object):
-    def findFinalValue(self, nums, original):
-        nums_set = set(nums)
-
-        while original in nums_set:
-            original *= 2
-
-        return original
-```
 
 ---
 
@@ -357,23 +303,6 @@ x_new = (x * 2 + b) % 5
 If `x_new == 0`, the prefix is divisible by 5.
 
 This allows us to process all prefixes efficiently in **O(n)** time.
-
----
-
-## 🧪 Code Implementation
-
-```python
-class Solution(object):
-    def prefixesDivBy5(self, nums):
-        res = []
-        cur = 0  # current prefix modulo 5
-
-        for b in nums:
-            cur = (cur * 2 + b) % 5
-            res.append(cur == 0)
-
-        return res
-```
 
 ---
 
@@ -467,17 +396,6 @@ t = S % k
 ```
 
 (When `S % k == 0`, the answer is `0`.)
-
----
-
-## 🧪 Code Implementation
-
-```python
-class Solution(object):
-    def minOperations(self, nums, k):
-        total = sum(nums)
-        return total % k
-```
 
 ---
 
