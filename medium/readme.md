@@ -435,27 +435,8 @@ So we just scan the string, accumulate the length of the current run of `'1'`s, 
 - `s = "0110111"` → runs: [2, 3] → `2*3/2 + 3*4/2 = 3 + 6 = 9`
 - `s = "101"` → runs: [1, 1] → `1 + 1 = 2`
 
-### 🧩 Reference Implementation (Python)
-```python
-class Solution(object):
-    def numSub(self, s):
-        MOD = 10**9 + 7
-        ans = 0
-        run = 0
+---
 
-        for ch in s:
-            if ch == '1':
-                run += 1
-            else:
-                if run:
-                    ans = (ans + run * (run + 1) // 2) % MOD
-                    run = 0
-
-        if run:
-            ans = (ans + run * (run + 1) // 2) % MOD
-
-        return ans
-```
 # 1930. Unique Length-3 Palindromic Subsequences
 
 ## 🧩 Problem Summary
@@ -530,34 +511,6 @@ This avoids searching all subsequences and works in **linear time**.
 
 ---
 
-## 🧪 Code Implementation
-
-```python
-class Solution(object):
-    def countPalindromicSubsequence(self, s):
-        n = len(s)
-
-        first = [n] * 26
-        last = [-1] * 26
-
-        for i, ch in enumerate(s):
-            idx = ord(ch) - ord('a')
-            first[idx] = min(first[idx], i)
-            last[idx] = max(last[idx], i)
-
-        ans = 0
-
-        for c in range(26):
-            if first[c] < last[c]:
-                l, r = first[c], last[c]
-                mid_chars = set(s[l+1:r])
-                ans += len(mid_chars)
-
-        return ans
-```
-
----
-
 ## ✔️ Result
 
 This solution efficiently counts all *unique* palindromic subsequences of length 3  
@@ -623,25 +576,6 @@ If `Rₙ == 0`, then the repunit of length `n` is divisible by `k`.
 ### ➤ Check only up to k iterations  
 There are only `k` possible remainders (`0..k-1`).  
 After `k` steps, if we haven’t seen remainder 0, we are in a cycle → no solution.
-
----
-
-## 🧪 Code Implementation
-
-```python
-class Solution(object):
-    def smallestRepunitDivByK(self, k):
-        if k % 2 == 0 or k % 5 == 0:
-            return -1
-
-        rem = 0
-        for length in range(1, k + 1):
-            rem = (rem * 10 + 1) % k
-            if rem == 0:
-                return length
-
-        return -1
-```
 
 ---
 
@@ -739,36 +673,6 @@ We track the maximum such value.
 - **Space Complexity:** O(k)
 
 Efficient for n up to 2 × 10⁵.
-
----
-
-## 🧪 Code Implementation
-
-```python
-class Solution(object):
-    def maxSubarraySum(self, nums, k):
-        n = len(nums)
-
-        INF = float('inf')
-        minPref = [INF] * k
-
-        prefix = 0
-        minPref[0] = 0
-
-        ans = -10**30
-
-        for i, x in enumerate(nums, 1):
-            prefix += x
-            r = i % k
-
-            if minPref[r] != INF:
-                ans = max(ans, prefix - minPref[r])
-
-            if prefix < minPref[r]:
-                minPref[r] = prefix
-
-        return ans
-```
 
 ---
 
