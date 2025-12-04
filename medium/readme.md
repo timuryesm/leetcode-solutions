@@ -771,3 +771,52 @@ This problem becomes a clean combinatorics task:
 This gives an optimal and elegant O(n) solution.
 
 ---
+
+# 2211 Count Collisions on a Road --- LeetCode (Medium)
+
+This problem asks you to determine how many **collisions** occur among
+cars moving on an infinitely long road.\
+Each car can move **Left (L)**, **Right (R)**, or **Stay (S)**. After
+any collision, involved cars become stationary.
+
+------------------------------------------------------------------------
+
+## 🚗 Key Insight
+
+Instead of simulating movement, we use structural observations:
+
+### 1. Cars that will **never** collide:
+
+-   Leading `'L'` cars at the far **left** move outward.
+-   Trailing `'R'` cars at the far **right** move outward.
+
+### 2. All moving cars in the **middle segment** will eventually collide:
+
+Once the outer non-colliding cars are removed, every remaining `'L'` or
+`'R'` car must collide with something.
+
+Thus:
+
+> In the middle substring, each non‑stationary car contributes **exactly
+> 1 collision**.
+
+------------------------------------------------------------------------
+
+## 🧠 Algorithm Overview
+
+1.  Trim leading `'L'` cars.
+2.  Trim trailing `'R'` cars.
+3.  Count characters in the remaining substring that are not `'S'`.
+
+The result is the total number of collisions.
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(n)\
+-   **Space:** O(1)
+
+------------------------------------------------------------------------
+
+This README intentionally excludes the code implementation.
