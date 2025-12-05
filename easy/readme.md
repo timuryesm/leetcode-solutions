@@ -416,3 +416,52 @@ sum(nums) % k
 This provides a simple and optimal 1-line solution.
 
 ---
+
+# 3432 Count Partitions with Even Sum Difference --- LeetCode (Easy)
+
+This problem asks you to count how many valid partitions of an array
+result in an **even difference** between the sum of the left subarray
+and that of the right subarray.
+
+A partition at index *i* divides the array into: - Left: `nums[0..i]` -
+Right: `nums[i+1..n-1]`
+
+Both must be non-empty.
+
+------------------------------------------------------------------------
+
+## 🔍 Key Insight
+
+Let: - `left_sum = sum(nums[0..i])` - `total = sum(nums)`
+
+The difference simplifies to:
+
+\[ left_sum - (total - left_sum) = 2 `\cdot `{=tex}left_sum - total \]
+
+Because `2 × left_sum` is always even:
+
+> The parity of the difference depends **only on the total sum**.
+
+-   If `total` is **even** → the difference is always even → **all
+    `n - 1` partitions are valid**.
+-   If `total` is **odd** → the difference is always odd → **zero valid
+    partitions**.
+
+------------------------------------------------------------------------
+
+## 🧠 Algorithm Summary
+
+1.  Compute the total sum of the array.
+2.  If total is odd → return `0`.
+3.  Otherwise → return `n - 1`.
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(n)
+-   **Space:** O(1)
+
+------------------------------------------------------------------------
+
+This README excludes the code solution intentionally.
