@@ -819,4 +819,54 @@ The result is the total number of collisions.
 
 ------------------------------------------------------------------------
 
-This README intentionally excludes the code implementation.
+# 3578 Count Partitions With Max--Min Difference at Most K --- LeetCode (Medium)
+
+This problem asks you to count the number of ways to partition an array
+into one or more **contiguous segments**, such that in every segment:
+
+\[ `\max`{=tex}(segment) - `\min`{=tex}(segment) `\le `{=tex}K \]
+
+Because the number of valid partitions can be large, the result is
+returned modulo **10⁹ + 7**.
+
+------------------------------------------------------------------------
+
+## 🔍 Key Insight
+
+For each index *j*, consider all starting indices *s* such that the
+segment `nums[s..j]` satisfies:
+
+\[ `\max`{=tex}(nums\[s..j\]) - `\min`{=tex}(nums\[s..j\]) `\le `{=tex}K
+\]
+
+Let `dp[i]` represent the number of valid partitions of the prefix
+`nums[0..i-1]`. Then:
+
+\[ dp\[j+1\] = `\sum`{=tex}\_{s=L_j}\^{j} dp\[s\] \]
+
+where `L_j` is the smallest valid starting point for a segment ending at
+`j`.
+
+------------------------------------------------------------------------
+
+## 🧠 Efficient Strategy
+
+To avoid recomputing max and min for each segment:
+
+-   Maintain a **sliding window** `[l..j]`.
+-   Use **two monotonic deques**:
+    -   One tracks the maximum in the window.
+    -   One tracks the minimum.
+-   Increase `l` while the window violates `max - min ≤ K`.
+-   Use **prefix sums** to compute the DP range sum efficiently.
+
+This reduces the complexity from O(n²) to **O(n)**.
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(n)\
+-   **Space:** O(n)
+
+------------------------------------------------------------------------
