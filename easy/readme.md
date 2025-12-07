@@ -464,4 +464,52 @@ Because `2 × left_sum` is always even:
 
 ------------------------------------------------------------------------
 
-This README excludes the code solution intentionally.
+# Count Odd Numbers in an Interval Range --- LeetCode 1523 (Easy)
+
+This problem asks you to count how many **odd numbers** appear in the
+inclusive interval:
+
+\[ \[low, high\] \]
+
+Both endpoints are non‑negative integers, and the range may be as large
+as 10⁹.
+
+------------------------------------------------------------------------
+
+## 🔍 Key Insight
+
+The total number of integers in the interval is:
+
+\[ high - low + 1 \]
+
+Odd numbers occur every two integers.\
+Therefore:
+
+-   If **either** `low` or `high` is odd, the interval contains one
+    extra odd number.
+-   Otherwise, the count of odd numbers is simply half the interval
+    length.
+
+This leads to a constant‑time arithmetic solution.
+
+------------------------------------------------------------------------
+
+## 🧠 Formula
+
+\[ `\text{odds}`{=tex} =
+```{=tex}
+\begin{cases}
+\frac{high - low}{2} + 1, & \text{if low or high is odd} \\
+\frac{high - low}{2}, & \text{otherwise}
+\end{cases}
+```
+\]
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(1)\
+-   **Space:** O(1)
+
+------------------------------------------------------------------------
