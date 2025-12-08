@@ -513,3 +513,51 @@ This leads to a constant‑time arithmetic solution.
 -   **Space:** O(1)
 
 ------------------------------------------------------------------------
+
+# 1925 Count Square Sum Triples — LeetCode (Easy)
+
+A **square triple** `(a, b, c)` is defined as a triple of integers such that:
+
+\[
+a^2 + b^2 = c^2
+\]
+
+Given an integer `n`, the task is to count how many such triples satisfy:
+
+\[
+1 \le a, b, c \le n
+\]
+
+Note that `(a, b, c)` and `(b, a, c)` are considered **different** triples.
+
+---
+
+## 🔍 Key Idea
+
+- Since `n ≤ 250`, a simple brute-force approach is efficient enough.
+- We can:
+  - Iterate over all possible `c` from `1` to `n`.
+  - For each `c`, iterate over all `a` and `b` from `1` to `n`.
+  - Count each pair `(a, b)` such that `a² + b² = c²`.
+
+Alternatively, we can precompute all squares `i²` for `1 ≤ i ≤ n` and work with them directly to avoid recomputing powers repeatedly.
+
+---
+
+## 🧠 Optimization Possibility
+
+Instead of three nested loops, you can:
+
+- Precompute all squares in an array or set.
+- Loop over `a` and `b`, compute `a² + b²`, and check if it equals some `c²` with `c ≤ n`.
+
+Both versions are acceptable given the small constraint.
+
+---
+
+## ⏱️ Complexity
+
+- **Time:** O(n²) or O(n³) depending on the implementation (both are fine for `n ≤ 250`)
+- **Space:** O(n) if you store precomputed squares, otherwise O(1)
+
+---
