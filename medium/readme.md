@@ -870,3 +870,55 @@ This reduces the complexity from O(n²) to **O(n)**.
 -   **Space:** O(n)
 
 ------------------------------------------------------------------------
+
+# 3531 Count Covered Buildings --- LeetCode (Medium)
+
+This problem asks you to determine how many buildings in an **n × n**
+city grid are *covered*.\
+A building located at coordinates **(x, y)** is considered *covered* if
+it has at least one other building:
+
+-   **Left** of it in the same row\
+-   **Right** of it in the same row\
+-   **Above** it in the same column\
+-   **Below** it in the same column
+
+All building coordinates are unique.
+
+------------------------------------------------------------------------
+
+## 🔍 Key Insight
+
+Instead of checking every building pair, we only need the **minimum and
+maximum positions** in each row and column.
+
+For a building at `(x, y)` to be covered:
+
+-   Its `y` must satisfy:\
+    `row_min[x] < y < row_max[x]`\
+-   Its `x` must satisfy:\
+    `col_min[y] < x < col_max[y]`
+
+If both conditions hold, the building has neighbors in all four
+directions.
+
+------------------------------------------------------------------------
+
+## 🧠 Algorithm Summary
+
+1.  Create arrays:
+    -   `row_min[x]`, `row_max[x]`
+    -   `col_min[y]`, `col_max[y]`
+2.  First pass over all buildings:
+    -   Update row and column min/max values.
+3.  Second pass:
+    -   Count how many buildings satisfy the four-direction constraint.
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(m), where m = number of buildings\
+-   **Space:** O(n)
+
+------------------------------------------------------------------------
