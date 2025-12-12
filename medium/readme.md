@@ -922,3 +922,75 @@ directions.
 -   **Space:** O(n)
 
 ------------------------------------------------------------------------
+
+# 3433  Count Mentions Per User --- LeetCode(Medium)
+
+This problem simulates a **user‑mention system** where users can
+temporarily go offline and messages can mention users in different ways.
+
+You are given: - `numberOfUsers`: total users, labeled from `0` to
+`numberOfUsers - 1` - `events`: a list of timestamped events
+
+The task is to return how many times **each user is mentioned** across
+all message events.
+
+------------------------------------------------------------------------
+
+## 📌 Event Types
+
+### MESSAGE
+
+    ["MESSAGE", timestamp, mentions_string]
+
+The `mentions_string` may contain: - `id<number>` → mentions a specific
+user (counts even if the user is offline) - `ALL` → mentions all users
+(online and offline) - `HERE` → mentions only users who are online at
+that timestamp
+
+Each mention counts separately, including duplicates in the same
+message.
+
+------------------------------------------------------------------------
+
+### OFFLINE
+
+    ["OFFLINE", timestamp, user_id]
+
+-   The user becomes offline at `timestamp`
+-   They automatically return online at `timestamp + 60`
+-   Status changes are processed **before** any message at the same
+    timestamp
+
+------------------------------------------------------------------------
+
+## 🔍 Key Insight
+
+To solve this problem:
+
+-   Track each user's offline window using a timestamp (`offline_until`)
+-   Process events in chronological order
+-   Ensure OFFLINE events are handled before MESSAGE events at the same
+    time
+-   Apply mention rules depending on the message token (`id`, `ALL`,
+    `HERE`)
+
+Since constraints are small, iterating over users is efficient.
+
+------------------------------------------------------------------------
+
+## 🧠 Algorithm Summary
+
+1.  Sort events by `(timestamp, type)` with OFFLINE first.
+2.  Maintain an array to track when users come back online.
+3.  For each MESSAGE event:
+    -   Count mentions based on the token rules.
+4.  Return the final mention counts.
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(events × numberOfUsers)
+-   **Space:** O(numberOfUsers)
+
+------------------------------------------------------------------------
