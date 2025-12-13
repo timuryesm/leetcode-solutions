@@ -561,3 +561,64 @@ Both versions are acceptable given the small constraint.
 - **Space:** O(n) if you store precomputed squares, otherwise O(1)
 
 ---
+
+# 3606 Coupon Code Validator --- LeetCode (Easy)
+
+This problem asks you to validate and filter a list of coupon codes
+based on specific rules, then return the valid coupons in a required
+sorted order.
+
+You are given three arrays of equal length: - `code`: coupon
+identifiers - `businessLine`: business category for each coupon -
+`isActive`: whether the coupon is currently active
+
+------------------------------------------------------------------------
+
+## ✅ Coupon Validity Rules
+
+A coupon is considered **valid** if **all** of the following conditions
+hold:
+
+1.  **Code format**
+    -   Non‑empty
+    -   Contains only alphanumeric characters (`a–z`, `A–Z`, `0–9`) or
+        underscore (`_`)
+2.  **Business line**
+    -   Must be one of:
+        -   `electronics`
+        -   `grocery`
+        -   `pharmacy`
+        -   `restaurant`
+3.  **Active status**
+    -   `isActive[i]` must be `true`
+
+------------------------------------------------------------------------
+
+## 🔍 Sorting Requirements
+
+Valid coupons must be returned: 1. Sorted by `businessLine` in this
+exact order: - `electronics` - `grocery` - `pharmacy` - `restaurant` 2.
+Sorted lexicographically by `code` **within each business line**
+
+------------------------------------------------------------------------
+
+## 🧠 Algorithm Summary
+
+1.  Define the allowed business lines and their priority order.
+2.  Filter coupons that:
+    -   Are active
+    -   Have a valid code format
+    -   Belong to a valid business line
+3.  Sort valid coupons by `(businessLineOrder, code)`.
+4.  Return only the coupon codes.
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(n log n)
+-   **Space:** O(n)
+
+Efficient for the given constraints (`n ≤ 100`).
+
+------------------------------------------------------------------------
