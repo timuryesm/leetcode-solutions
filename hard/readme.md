@@ -443,3 +443,58 @@ A trapezoid requires at least one pair of **parallel segments** lying on
 Efficient for up to 500 input points.
 
 ---
+
+# 2147 Number of Ways to Divide a Long Corridor --- LeetCode (Hard)
+
+This problem asks you to count how many ways a corridor can be divided
+into sections such that **each section contains exactly two seats**
+(`S`) and any number of plants (`P`).
+
+Two dividers are already placed: - One before index `0` - One after
+index `n - 1`
+
+Additional dividers may be placed between adjacent positions.
+
+------------------------------------------------------------------------
+
+## 🔍 Key Insight
+
+Each valid section must contain **exactly two seats**.
+
+-   If the total number of seats is **odd** or **zero**, there is no
+    valid way.
+-   Seats are grouped in order:
+    -   (1st, 2nd), (3rd, 4th), ...
+
+Between two consecutive seat-pairs, there may be plants. If there are
+`p` plants between them, then there are:
+
+\[ p + 1 \]
+
+possible positions for a divider.
+
+The total number of valid ways is the **product** of these choices
+across all seat-pair boundaries.
+
+------------------------------------------------------------------------
+
+## 🧠 Algorithm Summary
+
+1.  Count the total number of seats.
+2.  If the count is odd or zero, return `0`.
+3.  Traverse the corridor:
+    -   Track seat pairs.
+    -   Count plants between consecutive pairs.
+4.  Multiply `(plants + 1)` for each gap.
+5.  Return the result modulo `10⁹ + 7`.
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(n)
+-   **Space:** O(1)
+
+Efficient for corridor lengths up to 100,000.
+
+------------------------------------------------------------------------
