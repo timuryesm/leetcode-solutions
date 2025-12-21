@@ -994,3 +994,52 @@ Since constraints are small, iterating over users is efficient.
 -   **Space:** O(numberOfUsers)
 
 ------------------------------------------------------------------------
+
+# 955 Delete Columns to Make Sorted II --- LeetCode (Medium)
+
+This problem asks you to remove the **minimum number of columns** from
+an array of equal‑length strings so that the resulting strings are in
+**lexicographic (non‑decreasing) order**.
+
+All deletions apply to **every string** at the same column indices.
+
+------------------------------------------------------------------------
+
+## 🔍 Key Insight
+
+We process the columns **from left to right** and decide greedily
+whether to keep or delete each column.
+
+For adjacent string pairs `(strs[i], strs[i+1])`: - Some pairs may
+already be confirmed as ordered based on previously kept columns. - A
+new column is **invalid** if it causes any *unresolved* pair to violate
+lexicographic order.
+
+If keeping a column would break ordering for even one unresolved pair,
+that column must be deleted.
+
+------------------------------------------------------------------------
+
+## 🧠 Algorithm Summary
+
+1.  Maintain an array tracking which adjacent string pairs are already
+    ordered.
+2.  Iterate through columns from left to right:
+    -   If the column breaks order for any unresolved pair → delete it.
+    -   Otherwise, keep it and mark newly resolved pairs.
+3.  Count how many columns were deleted.
+
+This greedy approach guarantees the minimum number of deletions.
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(n × m), where
+    -   `n` = number of strings\
+    -   `m` = length of each string
+-   **Space:** O(n)
+
+Efficient for the given constraints.
+
+------------------------------------------------------------------------
