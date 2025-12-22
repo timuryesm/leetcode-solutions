@@ -498,3 +498,55 @@ across all seat-pair boundaries.
 Efficient for corridor lengths up to 100,000.
 
 ------------------------------------------------------------------------
+
+# 960 Delete Columns to Make Sorted III --- LeetCode (Hard)
+
+This problem asks you to remove the **minimum number of columns** from
+an array of equal‑length strings so that **each row individually**
+becomes lexicographically sorted (non‑decreasing).
+
+All deletions must apply to the **same column indices** across every
+string.
+
+------------------------------------------------------------------------
+
+## 🔍 Key Insight
+
+Unlike similar problems where rows must be sorted relative to each
+other, here **each row is independent**.
+
+After deletions, for every row `r`:
+
+    strs[r][0] ≤ strs[r][1] ≤ strs[r][2] ≤ ...
+
+This means we must keep a sequence of columns that is **non‑decreasing
+in every row simultaneously**.
+
+------------------------------------------------------------------------
+
+## 🧠 Algorithm Strategy
+
+Think of columns as elements in a sequence:
+
+-   We want the **longest sequence of columns** that can be kept
+
+-   For any two kept columns `i < j`, they must satisfy:
+
+        strs[r][i] ≤ strs[r][j]   for all rows r
+
+This becomes a **Longest Increasing Subsequence (LIS)** problem over
+columns, where: - Compatibility between columns is checked across all
+rows - The final answer is: `total_columns − longest_valid_sequence`
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(n × m²)
+    -   `n` = number of strings
+    -   `m` = length of each string
+-   **Space:** O(m)
+
+This is efficient given the constraints (`n, m ≤ 100`).
+
+------------------------------------------------------------------------
