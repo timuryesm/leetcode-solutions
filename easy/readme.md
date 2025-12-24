@@ -622,3 +622,56 @@ Sorted lexicographically by `code` **within each business line**
 Efficient for the given constraints (`n ≤ 100`).
 
 ------------------------------------------------------------------------
+
+# 2054 Two Best Non-Overlapping Events --- LeetCode (Medium)
+
+This problem asks you to choose **at most two non-overlapping events**
+such that the **sum of their values is maximized**.
+
+Each event is represented as:
+
+    [startTime, endTime, value]
+
+Event times are **inclusive**, meaning if one event ends at time `t`,
+the next event must start at **`t + 1` or later** to be considered
+non-overlapping.
+
+------------------------------------------------------------------------
+
+## 🔍 Key Insight
+
+You can attend: - **One event**, or - **Two events** that do not overlap
+in time
+
+A brute-force approach is too slow due to large constraints. Instead,
+the problem can be solved efficiently by:
+
+-   Sorting events by start time
+-   For each event, finding the **best possible second event** that
+    starts after it ends
+-   Precomputing maximum values to avoid repeated scans
+
+------------------------------------------------------------------------
+
+## 🧠 Algorithm Summary
+
+1.  Sort events by `startTime`.
+2.  Build a suffix array where each position stores the maximum event
+    value from that index to the end.
+3.  For each event:
+    -   Consider taking only this event
+    -   Binary search to find the first event that starts at or after
+        `endTime + 1`
+    -   Combine values using the precomputed suffix maximum
+4.  Track the maximum total value found.
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(n log n)
+-   **Space:** O(n)
+
+Efficient for up to 100,000 events.
+
+------------------------------------------------------------------------
