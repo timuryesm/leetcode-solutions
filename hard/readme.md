@@ -550,3 +550,59 @@ rows - The final answer is: `total_columns − longest_valid_sequence`
 This is efficient given the constraints (`n, m ≤ 100`).
 
 ------------------------------------------------------------------------
+
+# 2402 Meeting Rooms III --- LeetCode (Hard)
+
+This problem simulates assigning meetings to rooms while respecting
+availability, delays, and priority rules.
+
+You are given: - `n` meeting rooms labeled `0` to `n - 1` - A list of
+meetings, each defined as `[startTime, endTime)` (half‑closed interval)
+
+Your task is to determine **which room hosted the most meetings**.
+
+If multiple rooms tie, return the room with the **smallest index**.
+
+------------------------------------------------------------------------
+
+## 🔍 Key Rules
+
+Meetings are assigned using the following rules:
+
+1.  A meeting always uses the **available room with the smallest
+    index**.
+2.  If no room is available, the meeting is **delayed** until a room
+    becomes free.
+3.  Delayed meetings keep their original duration.
+4.  When multiple meetings are waiting, the one with the **earliest
+    original start time** gets priority.
+
+------------------------------------------------------------------------
+
+## 🧠 Algorithm Strategy
+
+To efficiently simulate this process:
+
+-   Sort meetings by their start time.
+-   Use **two priority queues (heaps)**:
+    -   One min‑heap for **available rooms** (by room index).
+    -   One min‑heap for **busy rooms** (by earliest end time).
+-   For each meeting:
+    -   Free rooms that have completed before the meeting starts.
+    -   Assign the meeting immediately if possible, otherwise delay it.
+-   Track how many meetings each room hosts.
+
+Finally, return the room with the highest meeting count.
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(m log n), where
+    -   `m` = number of meetings\
+    -   `n` = number of rooms
+-   **Space:** O(n)
+
+Efficient for large inputs (up to 100,000 meetings).
+
+------------------------------------------------------------------------
