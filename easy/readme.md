@@ -675,3 +675,43 @@ the problem can be solved efficiently by:
 Efficient for up to 100,000 events.
 
 ------------------------------------------------------------------------
+
+# 1351 Count Negative Numbers in a Sorted Matrix --- LeetCode (Easy)
+
+This problem asks you to count how many **negative numbers** appear in a
+matrix that is sorted in **non‑increasing order** both row‑wise and
+column‑wise.
+
+------------------------------------------------------------------------
+
+## 🔍 Key Insight
+
+Because the matrix is sorted: - Rows go from **larger to smaller** left
+→ right - Columns go from **larger to smaller** top → bottom
+
+This structure allows us to count negatives without checking every cell.
+
+------------------------------------------------------------------------
+
+## 🧠 Algorithm Strategy (O(m + n))
+
+Start from the **top‑right corner** of the matrix:
+
+-   If the current value is **negative**:
+    -   All values **below** it in the same column are also negative
+    -   Count them at once and move **left**
+-   If the current value is **non‑negative**:
+    -   Move **down** to find smaller values
+
+This guarantees each row and column is visited at most once.
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(m + n)
+-   **Space:** O(1)
+
+Efficient and optimal given the matrix constraints.
+
+------------------------------------------------------------------------
