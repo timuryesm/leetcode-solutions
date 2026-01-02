@@ -715,3 +715,69 @@ This guarantees each row and column is visited at most once.
 Efficient and optimal given the matrix constraints.
 
 ------------------------------------------------------------------------
+
+# 981 N-Repeated Element in Size 2N Array
+
+## Problem Description
+
+You are given an integer array `nums` with the following properties:
+
+- The length of the array is `2 * n`
+- The array contains exactly `n + 1` unique elements
+- Exactly one element is repeated `n` times
+- All other elements appear exactly once
+
+Your task is to identify and return the element that is repeated `n` times.
+
+---
+
+## Examples
+
+| Input | Output |
+|------|--------|
+| `[1, 2, 3, 3]` | `3` |
+| `[2, 1, 2, 5, 3, 2]` | `2` |
+| `[5, 1, 5, 2, 5, 3, 5, 4]` | `5` |
+
+---
+
+## Key Observations
+
+- Since one element appears exactly half of the array size, it must repeat frequently.
+- Given the constraints, the repeated element is guaranteed to appear close to itself in the array.
+- This allows the problem to be solved efficiently without sorting.
+
+---
+
+## Approach
+
+### Optimized Approach (Constant Extra Space)
+
+- Compare each element with nearby elements at small index distances.
+- The repeated element will always match one of these nearby elements.
+- This method avoids using additional memory.
+
+### Alternative Approach (Using Extra Memory)
+
+- Keep track of elements that have already been seen.
+- The first element encountered twice is the answer.
+
+---
+
+## Complexity Analysis
+
+| Approach | Time Complexity | Space Complexity |
+|--------|----------------|-----------------|
+| Optimized (Index Comparison) | `O(n)` | `O(1)` |
+| Set-Based | `O(n)` | `O(n)` |
+
+---
+
+## Constraints
+
+- `2 ≤ n ≤ 5000`
+- `nums.length = 2 * n`
+- `0 ≤ nums[i] ≤ 10⁴`
+- Exactly one element is repeated `n` times
+
+---
