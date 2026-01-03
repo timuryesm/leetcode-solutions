@@ -606,3 +606,88 @@ Finally, return the room with the highest meeting count.
 Efficient for large inputs (up to 100,000 meetings).
 
 ------------------------------------------------------------------------
+
+# 1411 Number of Ways to Paint N × 3 Grid
+
+## Problem Description
+
+You are given a grid of size `n × 3`. Each cell must be painted using **one of three colors**:
+
+- Red
+- Yellow
+- Green
+
+The painting must satisfy the following rule:
+
+- No two adjacent cells (sharing a vertical or horizontal side) may have the same color.
+
+Your task is to compute the total number of valid ways to paint the grid.
+
+Since the result can be very large, return the answer **modulo `10⁹ + 7`**.
+
+---
+
+## Examples
+
+| Input | Output |
+|------|--------|
+| `n = 1` | `12` |
+| `n = 5000` | `30228214` |
+
+---
+
+## Key Observations
+
+- Each row has only **two valid coloring patterns**:
+  - **Two-color pattern (ABA)**: first and third cells have the same color, middle is different.
+  - **Three-color pattern (ABC)**: all three cells have different colors.
+- For a single row:
+  - ABA patterns: `6`
+  - ABC patterns: `6`
+- Each row depends only on the previous row → dynamic programming is suitable.
+
+---
+
+## Approach
+
+### Dynamic Programming with Pattern States
+
+Track two states for each row:
+
+- **ABA**: number of ways to paint the row using two colors
+- **ABC**: number of ways to paint the row using three colors
+
+Transition rules:
+
+- New ABA depends on previous ABA and ABC
+- New ABC also depends on previous ABA and ABC
+
+This allows the solution to run efficiently even for large `n`.
+
+---
+
+## Complexity Analysis
+
+| Metric | Value |
+|------|-------|
+| Time Complexity | `O(n)` |
+| Space Complexity | `O(1)` |
+
+Only two variables are maintained per iteration.
+
+---
+
+## Constraints
+
+- `1 ≤ n ≤ 5000`
+- Grid width is fixed at `3`
+- Colors available: `3`
+- Adjacent cells cannot share the same color
+
+---
+
+## Notes
+
+This problem demonstrates how identifying repeating **row patterns** can reduce a seemingly complex grid-coloring problem into a simple and efficient dynamic programming solution.
+
+---
