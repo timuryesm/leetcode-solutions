@@ -691,3 +691,53 @@ Only two variables are maintained per iteration.
 This problem demonstrates how identifying repeating **row patterns** can reduce a seemingly complex grid-coloring problem into a simple and efficient dynamic programming solution.
 
 ---
+
+# 1970 Last Day Where You Can Still Cross --- LeetCode  (Hard)
+
+This problem asks you to determine the **last possible day** on which it
+is still possible to walk from the **top row to the bottom row** of a
+grid using only land cells.
+
+The grid starts fully as land. Each day, **one new cell becomes water**,
+and once flooded it can no longer be used.
+
+------------------------------------------------------------------------
+
+## 🔍 Key Insight
+
+The ability to cross the grid is **monotonic** over time:
+
+-   If it is possible to cross on day `d`, it is also possible on any
+    earlier day `< d`
+-   If it is not possible on day `d`, it will never be possible on any
+    later day `> d`
+
+This monotonic property allows the use of **binary search** to
+efficiently find the last valid day.
+
+------------------------------------------------------------------------
+
+## 🧠 Algorithm Strategy
+
+1.  **Binary search** over the range of days.
+2.  For a chosen day `d`:
+    -   Mark the first `d` flooded cells as water.
+    -   Perform a **BFS / DFS** from all land cells in the top row.
+3.  Check whether any path reaches the bottom row.
+4.  Adjust the search range based on whether crossing is possible.
+
+The final answer is the **maximum day** for which crossing remains
+possible.
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O((R × C) × log(R × C))
+-   **Space:** O(R × C)
+
+Where `R` is the number of rows and `C` is the number of columns.
+
+This approach is efficient for grids up to 20,000 cells.
+
+------------------------------------------------------------------------
