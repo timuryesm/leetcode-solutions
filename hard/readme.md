@@ -741,3 +741,53 @@ Where `R` is the number of rows and `C` is the number of columns.
 This approach is efficient for grids up to 20,000 cells.
 
 ------------------------------------------------------------------------
+
+# 1458 Max Dot Product of Two Subsequences --- LeetCode (Hard)
+
+This problem asks you to find the **maximum dot product** between two
+**non-empty subsequences** of equal length taken from two integer
+arrays.
+
+A subsequence keeps the original order but may skip elements.
+
+------------------------------------------------------------------------
+
+## 🔍 Key Insight
+
+-   The subsequences must be **non-empty**.
+-   Elements must be paired in order, and each pair contributes
+    `nums1[i] * nums2[j]`.
+-   Skipping elements is allowed in either array.
+
+This naturally leads to **dynamic programming**, similar to sequence
+alignment problems.
+
+------------------------------------------------------------------------
+
+## 🧠 Algorithm Strategy
+
+Define a DP state that represents the best dot product achievable up to
+certain prefixes of the arrays:
+
+-   At each step, you can:
+    1.  **Pair the current elements** and add their product
+    2.  **Skip an element** from either array
+-   When pairing elements, you may either:
+    -   Start a new subsequence, or
+    -   Extend an existing one
+
+Care is taken to ensure the subsequence is **non-empty**, even when all
+products are negative.
+
+------------------------------------------------------------------------
+
+## ⏱️ Complexity
+
+-   **Time:** O(n × m)
+-   **Space:** O(m) (space-optimized DP)
+
+Where: - `n = len(nums1)` - `m = len(nums2)`
+
+This fits within the given constraints (`n, m ≤ 500`).
+
+------------------------------------------------------------------------
