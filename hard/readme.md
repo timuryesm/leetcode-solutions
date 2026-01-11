@@ -791,3 +791,46 @@ Where: - `n = len(nums1)` - `m = len(nums2)`
 This fits within the given constraints (`n, m ≤ 500`).
 
 ------------------------------------------------------------------------
+
+# 85. Maximal Rectangle
+
+**Difficulty:** Hard  
+**Topic:** Dynamic Programming, Stack
+
+## Problem Summary
+You are given a binary matrix filled with `'0'` and `'1'`.  
+Your task is to find the area of the largest rectangle that contains only `1`s.
+
+## Key Idea
+- Treat each row as the base of a histogram.
+- For every row, compute heights of consecutive `1`s.
+- For each histogram, compute the largest rectangle using a **monotonic stack**.
+- Track the maximum area across all rows.
+
+## Constraints
+- `1 ≤ rows, cols ≤ 200`
+- Matrix values are `'0'` or `'1'`
+
+## Example
+**Input**
+```
+[
+  ["1","0","1","0","0"],
+  ["1","0","1","1","1"],
+  ["1","1","1","1","1"],
+  ["1","0","0","1","0"]
+]
+```
+
+**Output**
+```
+6
+```
+
+## Notes
+- Time Complexity: **O(rows × cols)**
+- Space Complexity: **O(cols)**
+
+This problem combines histogram techniques with stack-based optimization and is a classic hard-level matrix problem.
+
+---
