@@ -781,3 +781,56 @@ Your task is to identify and return the element that is repeated `n` times.
 - Exactly one element is repeated `n` times
 
 ---
+
+# 1266. Minimum Time Visiting All Points
+
+**Difficulty:** Easy  
+**Topic:** Geometry, Greedy
+
+## Problem Summary
+You are given a list of points on a 2D plane and must visit them **in order**.  
+In one second, you can move:
+- 1 unit horizontally
+- 1 unit vertically
+- 1 unit diagonally (both directions at once)
+
+Your task is to compute the **minimum time** required to visit all points sequentially.
+
+## Key Insight
+For two consecutive points:
+- Let `dx = |x2 - x1|`
+- Let `dy = |y2 - y1|`
+
+The minimum time to move between them is:
+```
+max(dx, dy)
+```
+
+This is because diagonal moves reduce both `dx` and `dy` simultaneously.
+
+## Algorithm
+- Iterate through the points
+- For each adjacent pair, add `max(dx, dy)` to the total time
+
+## Constraints
+- `1 ≤ n ≤ 100`
+- Coordinates are between `-1000` and `1000`
+
+## Example
+**Input**
+```
+[[1,1],[3,4],[-1,0]]
+```
+
+**Output**
+```
+7
+```
+
+## Complexity
+- **Time Complexity:** O(n)
+- **Space Complexity:** O(1)
+
+This is a simple greedy problem that relies on understanding diagonal movement efficiency.
+
+---
