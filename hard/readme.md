@@ -834,3 +834,44 @@ Your task is to find the area of the largest rectangle that contains only `1`s.
 This problem combines histogram techniques with stack-based optimization and is a classic hard-level matrix problem.
 
 ---
+
+# 3510 Minimum Pair Removal to Sort Array II
+
+## 🧩 Problem
+Given an integer array `nums`, you may repeatedly merge **the adjacent pair with the minimum sum** (leftmost if tied) by replacing it with their sum.  
+Return the **minimum number of operations** needed to make the array **non-decreasing**.
+
+---
+
+## 🚀 Solution Overview
+This solution simulates the process efficiently using:
+
+- **Min-Heap (`heapq`)** to always select the adjacent pair with the smallest sum.
+- **Doubly Linked List (via arrays)** to update neighbors in O(1) after merges.
+- **Lazy Deletion** to skip outdated heap entries without expensive removals.
+- **Inversion Counter** to detect when the array becomes non-decreasing in O(1).
+
+The approach is optimized for large inputs (up to `10^5` elements) and handles negative values correctly.
+
+---
+
+## 🛠 Key Techniques
+- **Greedy merging** based on minimum adjacent sum
+- **Heap-based prioritization**
+- **Linked-list style adjacency maintenance**
+- **Efficient sorted-state detection**
+
+---
+
+## ⏱ Complexity
+| Metric | Complexity |
+|------|------------|
+| Time | `O(N log N)` |
+| Space | `O(N)` |
+
+---
+
+## 📌 Usage
+```python
+sol = Solution()
+print(sol.minimumPairRemoval([5, 2, 3, 1]))  # Output: 2
