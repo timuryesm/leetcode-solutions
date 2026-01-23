@@ -1,88 +1,74 @@
 import heapq
 
-class Solution(object):
+class Solution:
     def minimumPairRemoval(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
         n = len(nums)
         if n < 2:
             return 0
         
-        # Check if already non-decreasing
-        is_sorted = True
-        for i in range(n - 1):
-            if nums[i] > nums[i+1]:
-                is_sorted = False
-                break
-        if is_sorted:
-            return 0
-
-        # Doubly linked list to manage deletions and neighbors efficiently
-        # prev_idx and next_idx store the indices of neighbors
-        prev_idx = [i - 1 for i in range(n)]
-        next_idx = [i + 1 for i in range(n)]
-        next_idx[n - 1] = -1
+        # Doubly Linked List to handle O(1) removals
+        val = [x for x in nums]
+        nxt = list(range(1, n + 1))
+        prv = list(range(-1, n - 1))
         
-        # Min-priority queue to find the leftmost pair with minimum sum
-        # Element format: (sum, left_index, right_index)
+        # Priority Queue for greedy selection: (sum, leftmost_index)
         pq = []
         for i in range(n - 1):
-            heapq.heappush(pq, (nums[i] + nums[i+1], i, i + 1))
-            
-        ops = 0
-        current_nums = list(nums)
-        active_indices = [True] * n
+            heapq.heappush(pq, (val[i] + val[i+1], i))
         
-        while pq:
-            s, l, r = heapq.heappop(pq)
+        # Helper to check if a pair at index i is "bad" (unsorted)
+        def is_bad(i):
+            if i < 0 or i >= n: return False
+            j = nxt[i]
+            return j < n and val[i] > val[j]
+
+        # Initial bad_count
+        bad_count = 0
+        for i in range(n - 1):
+            if is_bad(i):
+                bad_count += 1
+        
+        if bad_count == 0:
+            return 0
+
+        ans = 0
+        removed = [False] * n
+        
+        while bad_count > 0 and pq:
+            s, i = heapq.heappop(pq)
             
-            # Validity check: indices must be active and still adjacent
-            if not active_indices[l] or not active_indices[r] or next_idx[l] != r:
+            # Lazy removal check
+            j = nxt[i]
+            if removed[i] or j >= n or (val[i] + val[j] != s):
                 continue
             
-            # Check if current state is non-decreasing
-            # To avoid O(N) checks, we only stop when no "bad" pairs remain.
-            # However, the problem asks for minimum ops to make it non-decreasing.
-            # The greedy simulation follows the specific rule provided.
+            # 1. Remove old "bad" statuses before updating values
+            if is_bad(prv[i]): bad_count -= 1
+            if is_bad(i):      bad_count -= 1
+            if is_bad(j):      bad_count -= 1
             
-            # Perform operation: Merge r into l
-            current_nums[l] = s
-            active_indices[r] = False
-            ops += 1
+            # 2. Perform the Merge
+            val[i] = s
+            removed[j] = True
             
-            # Update linked list
-            new_r_neighbor = next_idx[r]
-            next_idx[l] = new_r_neighbor
-            if new_r_neighbor != -1:
-                prev_idx[new_r_neighbor] = l
+            # 3. Update Doubly Linked List pointers
+            new_nxt = nxt[j]
+            nxt[i] = new_nxt
+            if new_nxt < n:
+                prv[new_nxt] = i
             
-            # Check if the array is now non-decreasing
-            # Optimization: only check near the modification or maintain a count of inversions
-            # For the sake of this implementation, we re-verify sortedness 
-            # as required by the simulation logic.
-            temp_idx = 0
-            while prev_idx[temp_idx] != -1: # find head
-                temp_idx = prev_idx[temp_idx]
+            # 4. Re-check "bad" statuses for the modified elements
+            if is_bad(prv[i]): bad_count += 1
+            if is_bad(i):      bad_count += 1
             
-            sorted_check = True
-            curr = temp_idx
-            while next_idx[curr] != -1:
-                if current_nums[curr] > current_nums[next_idx[curr]]:
-                    sorted_check = False
-                    break
-                curr = next_idx[curr]
+            ans += 1
+            if bad_count <= 0:
+                return ans
             
-            if sorted_check:
-                return ops
-            
-            # Add new potential pairs formed by the merge
-            # Pair to the left: (prev_idx[l], l)
-            if prev_idx[l] != -1:
-                heapq.heappush(pq, (current_nums[prev_idx[l]] + current_nums[l], prev_idx[l], l))
-            # Pair to the right: (l, next_idx[l])
-            if next_idx[l] != -1:
-                heapq.heappush(pq, (current_nums[l] + current_nums[next_idx[l]], l, next_idx[l]))
+            # 5. Push new potential pairs to the heap
+            if prv[i] != -1:
+                heapq.heappush(pq, (val[prv[i]] + val[i], prv[i]))
+            if nxt[i] < n:
+                heapq.heappush(pq, (val[i] + val[nxt[i]], i))
                 
-        return ops
+        return ans
