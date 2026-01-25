@@ -834,3 +834,42 @@ This is because diagonal moves reduce both `dx` and `dy` simultaneously.
 This is a simple greedy problem that relies on understanding diagonal movement efficiency.
 
 ---
+
+# 1984. Minimum Difference Between Highest and Lowest of K Scores
+
+## Problem Overview
+You are given an array `nums` representing student scores and an integer `k`.  
+Select scores of any `k` students such that the difference between the highest and lowest scores is minimized.
+
+Return this minimum possible difference.
+
+---
+
+## Approach
+1. Sort the array.
+2. Use a sliding window of size `k`.
+3. For each window, compute the difference between the maximum and minimum values.
+4. Track and return the smallest difference.
+
+---
+
+## Algorithm
+- If `k == 1`, the answer is `0`.
+- Sort `nums`.
+- Iterate through all contiguous subarrays of length `k`.
+- Compute `nums[i + k - 1] - nums[i]` and keep the minimum.
+
+---
+
+## Complexity Analysis
+- **Time Complexity:** `O(n log n)` due to sorting
+- **Space Complexity:** `O(1)` (ignoring input storage)
+
+---
+
+## Example
+```python
+Input: nums = [9,4,1,7], k = 2
+Output: 2
+
+---
