@@ -871,5 +871,36 @@ Return this minimum possible difference.
 ```python
 Input: nums = [9,4,1,7], k = 2
 Output: 2
+```
+---
+
+# 1200. Minimum Absolute Difference
+
+## Problem Summary
+Given an array of **distinct integers**, find all pairs of elements with the **minimum absolute difference**.  
+Each pair must be in ascending order, and the final list of pairs should also be sorted.
+
+## Approach
+1. **Sort** the array.
+2. Traverse adjacent elements to compute differences.
+3. Track the **minimum difference** found.
+4. Collect all pairs whose difference equals this minimum.
+
+Sorting ensures the smallest absolute differences appear between neighboring elements.
+
+## Complexity
+- **Time Complexity:** `O(n log n)` due to sorting  
+- **Space Complexity:** `O(1)` (excluding output)
+
+## Example
+Input:
+[4,2,1,3]
+
+Output:
+[[1,2],[2,3],[3,4]]
+
+## Notes
+- Works efficiently for large inputs up to `10^5` elements.
+- Guaranteed distinct integers simplify comparison logic.
 
 ---
