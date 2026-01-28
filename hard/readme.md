@@ -875,3 +875,91 @@ The approach is optimized for large inputs (up to `10^5` elements) and handles n
 ```python
 sol = Solution()
 print(sol.minimumPairRemoval([5, 2, 3, 1]))  # Output: 2
+```
+---
+
+# 3651. Minimum Cost Path with Teleportations
+
+## 🧠 Problem Overview
+
+You are given an `m × n` grid where each cell has a non-negative cost. Starting from the top-left cell `(0, 0)`, your goal is to reach the bottom-right cell `(m - 1, n - 1)` with **minimum total cost**.
+
+You can move in two ways:
+
+### 1️⃣ Normal Move
+- Move **right** or **down**
+- Cost = value of the destination cell
+
+### 2️⃣ Teleportation (limited)
+- From `(i, j)` teleport to **any** cell `(x, y)` where  
+  `grid[x][y] ≤ grid[i][j]`
+- Cost = **0**
+- You may teleport **at most `k` times**
+
+Return the **minimum cost** to reach the destination, or `-1` if it’s not possible.
+
+---
+
+## 💡 Key Observations
+
+- Normal moves form a weighted grid graph
+- Teleportation adds **zero-cost edges** with a constraint on usage
+- Teleport destinations depend on cell values, not position
+- Teleports can dramatically reduce path cost if used strategically
+
+---
+
+## ⚙️ Solution Strategy
+
+We use **Dijkstra’s algorithm** on an expanded state space:
+
+### State Representation
+(cell_index, teleports_used)
+
+### Techniques Used
+
+- **Priority Queue (Min-Heap)** for shortest-path search
+- **Multi-layer Dijkstra** to track teleport usage
+- **Sorted cell values + DSU (Union-Find)** to efficiently process teleport targets
+- **Lazy processing** so each teleport destination is visited only once per layer
+
+This ensures we stay within time limits even for large grids.
+
+---
+
+## ⏱️ Complexity Analysis
+
+| Metric | Complexity |
+|------|------------|
+| Time | `O((m·n·k) log (m·n))` |
+| Space | `O(m·n·k)` |
+
+Where:
+- `m, n ≤ 80`
+- `k ≤ 10`
+
+---
+
+## 🧪 Example
+Input:
+grid = [[1,3,3],
+[2,5,4],
+[4,3,5]]
+k = 2
+
+Output:
+7
+
+Teleporting at the right time avoids expensive cells and minimizes total cost.
+
+---
+
+## ✅ Summary
+
+- Combines graph theory with smart teleport optimization
+- Efficient even with up to **10⁵ teleport edges**
+- Guarantees minimum cost using Dijkstra’s algorithm
+
+This approach balances correctness and performance for a challenging grid path problem.
+
+---
