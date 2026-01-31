@@ -904,3 +904,66 @@ Output:
 - Guaranteed distinct integers simplify comparison logic.
 
 ---
+
+# 744. Find Smallest Letter Greater Than Target
+
+## 🧩 Problem Overview
+
+You are given a sorted list of lowercase letters and a target character.  
+Your task is to find the **smallest character that is strictly greater than the target**.
+
+- If such a character exists, return it.
+- If it does **not** exist, return the **first character** in the list (wrap-around behavior).
+
+The list is guaranteed to:
+- Be sorted in non-decreasing order
+- Contain at least two different characters
+
+---
+
+## 💡 Approach
+
+We use **Binary Search** to efficiently find the smallest letter greater than the target:
+
+1. Search for the first letter that is strictly greater than `target`.
+2. If found, return it.
+3. If not found, return `letters[0]` (wrap-around case).
+
+This works because the array is already sorted.
+
+---
+
+## ⏱️ Complexity Analysis
+
+- **Time Complexity:** `O(log n)`
+- **Space Complexity:** `O(1)`
+
+---
+
+## ✅ Example
+
+**Input:**
+```text
+letters = ["c","f","j"], target = "c"
+```
+
+**Output**
+"f"
+
+🧪 Edge Case
+
+If target is greater than or equal to all characters in the array:
+```
+letters = ["x","x","y","y"], target = "z"
+```
+
+Return:
+```
+"x"
+```
+
+🚀 Implementation
+
+See the Python implementation using binary search in the solution file.
+
+---
