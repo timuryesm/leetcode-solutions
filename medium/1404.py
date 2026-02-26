@@ -1,0 +1,15 @@
+class Solution(object):
+    def numSteps(self, s):
+        steps = 0
+        carry = 0
+        
+        for i in range(len(s) - 1, 0, -1):
+            bit = int(s[i])
+            
+            if bit + carry == 1:
+                steps += 2
+                carry = 1
+            else:
+                steps += 1
+                
+        return steps + carry
